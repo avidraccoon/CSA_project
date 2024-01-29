@@ -9,7 +9,7 @@ public class GraphicsWindow extends JFrame {
     private String title = "Window";
     private boolean resizable = true;
 
-    private DrawingManager drawingManager;
+    private DrawingHandler drawingHandler = new DrawingHandler();
 
     private GraphicsWindow(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -17,8 +17,6 @@ public class GraphicsWindow extends JFrame {
         setResizable(resizable);
         setSize(width, height);
         setVisible(true);
-        drawingManager = new DrawingManager();
-        drawingManager.addLayer(new DrawingHandler());
     }
 
     public static GraphicsWindow createWindow(){
@@ -50,15 +48,15 @@ public class GraphicsWindow extends JFrame {
 
     public void paint(Graphics g){
         super.paint(g);
-        drawingManager.Draw(g);
+        drawingHandler.draw(g);
     }
 
-    public DrawingManager getDrawingManager(){
-        return drawingManager;
+    public DrawingHandler getDrawingHandler(){
+        return drawingHandler;
     }
 
-    public void setDrawingManager(DrawingManager drawingManager){
-        this.drawingManager = drawingManager;
+    public void setDrawingHandler(DrawingHandler drawingHandler){
+        this.drawingHandler = drawingHandler;
     }
 
 
