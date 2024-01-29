@@ -18,7 +18,7 @@ public class App
         System.out.println( "Hello World!" );
         GraphicsWindow window = GraphicsWindow.createWindow();
         window.setTitle("Test");
-        window.setSize(800, 600);
+        window.setSize(400, 300);
         DrawingHandler handler = window.getDrawingHandler();
         DrawingFunctions.setHandler(handler);
         DrawingFunctions.fillCircle(75, 238, 100, Color.BLACK);
