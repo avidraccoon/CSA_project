@@ -26,4 +26,10 @@ public class DrawingHandler {
     }
 
 
+
+    public void clear(){
+      actions.clear();
+    } 
+
+
 }
