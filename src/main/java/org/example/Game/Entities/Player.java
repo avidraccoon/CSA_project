@@ -95,9 +95,9 @@ public class Player{
    }
   }
 
-  public void shootProjectile(DrawingHandler handler){
+  public void shootProjectile(DrawingHandler handler, double vx, double vy){
     if (cooldown==0){
-      Projectile proj = new Projectile(getX(), getY(), 3, 3);
+      Projectile proj = new Projectile(getX(), getY(), vx, vy);
       proj.addToHandler(handler);
       shootProjectiles.add(proj);
       cooldown+=10;

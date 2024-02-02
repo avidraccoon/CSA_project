@@ -1,6 +1,6 @@
 package org.example;
 
-
+import java.awt.*;
 import org.example.TestingLibrary.GraphicalWindow;
 import org.example.TestingLibrary.Graphics.DrawingHandler;
 import org.example.TestingLibrary.Graphics.Shapes.GraphicalRectangle;
@@ -11,8 +11,8 @@ import org.example.TestingLibrary.Graphics.Shapes.GraphicalCircle;
 import org.example.Game.Entities.Player;
 import org.example.Game.Entities.Projectile;
 import org.example.Game.Entities.Enemy;
-
-
+import org.example.Game.World.Background;
+import org.example.Game.World.Trees;
 
 import javax.swing.Timer;
 
@@ -71,13 +71,21 @@ public class App
         vy*=friction;
         player.setX(x);
         player.setY(y);
+        double mouseX = MouseInfo.getPointerInfo().getLocation().getX();
+        double mouseY = MouseInfo.getPointerInfo().getLocation().getY();
+        double xDist = Math.abs(mouseX-player.getX());
+        double yDist = Math.abs(mouseY-player.getY());
+        double totalDist = xDist + yDist;
+        double xFrac = xDist/totalDist;
+        double yFrac = yDist/totalDist;
         if (fTyped){
-          player.shootProjectile(drawingHandler);
+          player.shootProjectile(drawingHandler, 5.0*xFrac* (mouseX<x?-1:1), 5.0*yFrac*(mouseY<y?-1:1));
           fTyped = false;
         }
         player.update();
         App.window.paint(App.window.getGraphics());
         //System.out.println(x+" "+y);
+        
     }
 
     public static void main( String[] args )
@@ -85,15 +93,16 @@ public class App
         System.out.println( "Hello World!" );
         window = GraphicalWindow.createWindow();
         window.setTitle("Test");
-        window.setSize(400, 300);
+        window.setSize(400, 420);
         window.addKeyListener(window);
         window.addMouseListener(window);
         window.setMouseHandler(new TestMouseHandler());
         window.setKeyHandler(new TestKeyHandler());
         drawingHandler = window.getDrawingHandler();
-        drawingHandler.addDrawObject(rectangle);
+        drawingHandler.addDrawObject(Background.getInstance());
         player.addToHandler(drawingHandler);
-        int delay = 1000/40;
+        drawingHandler.addDrawObject(Trees.getInstance());
+        int delay = 1000/30;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 App.update();
