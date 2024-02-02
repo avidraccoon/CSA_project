@@ -1,4 +1,4 @@
-package org.example.Input;
+package org.example.TestingLibrary.Input;
 import java.awt.event.MouseEvent;
 
 public class MouseHandler{

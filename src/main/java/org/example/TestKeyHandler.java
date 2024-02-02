@@ -1,7 +1,7 @@
 package org.example;
 
 import java.awt.event.KeyEvent;
-import org.example.Input.KeyboardHandler;
+import org.example.TestingLibrary.Input.KeyboardHandler;
 
 public class TestKeyHandler extends KeyboardHandler{
   public void keyPressed(KeyEvent e){//super.keyPressed(e);

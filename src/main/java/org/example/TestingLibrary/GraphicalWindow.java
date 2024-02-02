@@ -1,14 +1,18 @@
-package org.example.Graphics;
+package org.example.TestingLibrary;
 import javax.swing.*;
 import java.awt.*;
-import org.example.Input.*;
+
+import org.example.TestingLibrary.Graphics.DrawingHandler;
+import org.example.TestingLibrary.Input.KeyboardHandler;
+import org.example.TestingLibrary.Input.MouseHandler;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
 
-public class GraphicsWindow extends JFrame implements MouseListener, KeyListener {
+public class GraphicalWindow extends JFrame implements MouseListener, KeyListener {
 
     private int width = 100;
     private int height = 100;
@@ -20,7 +24,7 @@ public class GraphicsWindow extends JFrame implements MouseListener, KeyListener
     private KeyboardHandler keyboardHandler = new KeyboardHandler();
     private MouseHandler mouseHandler = new MouseHandler();
   
-    private GraphicsWindow(){
+    private GraphicalWindow(){
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(title);
         setResizable(resizable);
@@ -28,24 +32,24 @@ public class GraphicsWindow extends JFrame implements MouseListener, KeyListener
         setVisible(true);
     }
 
-    public static GraphicsWindow createWindow(){
-        return new GraphicsWindow();
+    public static GraphicalWindow createWindow(){
+        return new GraphicalWindow();
     }
 
-    public static GraphicsWindow createWindow(int width, int height){
-        GraphicsWindow w = new GraphicsWindow();
+    public static GraphicalWindow createWindow(int width, int height){
+        GraphicalWindow w = new GraphicalWindow();
         w.setSize(width, height);
         return w;
     }
 
-    public static GraphicsWindow createWindow(String title){
-        GraphicsWindow w = new GraphicsWindow();
+    public static GraphicalWindow createWindow(String title){
+        GraphicalWindow w = new GraphicalWindow();
         w.setTitle(title);
         return w;
     }
 
-    public static GraphicsWindow createWindow(String title, int width, int height){
-        GraphicsWindow w = new GraphicsWindow();
+    public static GraphicalWindow createWindow(String title, int width, int height){
+        GraphicalWindow w = new GraphicalWindow();
         w.setTitle(title);
         w.setSize(width, height);
         return w;
