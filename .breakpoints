@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "src/main/java/org/example/Game/Entities/EntityGraphics/PlayerGraphics.java": [
+      {
+        "id": "6a67447e-49c6-4b9a-a301-d9fe5e3d0613",
+        "line": 17,
+        "version": 759,
+        "index": 347
+      }
+    ]
+  }
 }

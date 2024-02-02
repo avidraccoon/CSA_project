@@ -17,6 +17,7 @@ public class TestKeyHandler extends KeyboardHandler{
     if ((""+e.getKeyChar()).equals("d")) App.d=false;
   }
   public void keyTyped(KeyEvent e){
+    if ((""+e.getKeyChar()).equals("f")) App.fTyped = true;
     //super.keyTyped(e);
     /*
     if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE || e.getKeyChar() == KeyEvent.VK_DELETE){

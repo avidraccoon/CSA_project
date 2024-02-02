@@ -18,7 +18,6 @@ public class GraphicalWindow extends JFrame implements MouseListener, KeyListene
     private int height = 100;
     private String title = "Window";
     private boolean resizable = true;
-    
 
     private DrawingHandler drawingHandler = new DrawingHandler();
     private KeyboardHandler keyboardHandler = new KeyboardHandler();
