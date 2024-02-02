@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static String text = "Test";
     public static GraphicalWindow window;
@@ -33,28 +33,28 @@ public class App
     public static double speedCap = 6.5;
     public static double friction = 0;
     public static void update(){
-      if (w) vy-=speed;
-      if (a) vx-=speed;
-      if (s) vy+=speed;
-      if (d) vx+=speed;
-      if (vx > speedCap) vx = speedCap;
-      if (vx < -speedCap) vx = -speedCap;
-      if (vy > speedCap) vy = speedCap;
-      if (vy < -speedCap) vy = -speedCap;
-      x += vx;
-      y += vy;
-      if (vx>friction) vx-=friction;
-      if (vx<-friction) vx+=friction;
-      if (vy>friction) vy-=friction;
-      if (vy<-friction) vy+=friction;
-      vx*=0.85;
-      vy*=0.85;
-      rectangle.setX((int) x);
-      rectangle.setY((int) y);
-      App.window.repaint();
-      System.out.println(x+" "+y);
+        if (w) vy-=speed;
+        if (a) vx-=speed;
+        if (s) vy+=speed;
+        if (d) vx+=speed;
+        if (vx > speedCap) vx = speedCap;
+        if (vx < -speedCap) vx = -speedCap;
+        if (vy > speedCap) vy = speedCap;
+        if (vy < -speedCap) vy = -speedCap;
+        x += vx;
+        y += vy;
+        if (vx>friction) vx-=friction;
+        if (vx<-friction) vx+=friction;
+        if (vy>friction) vy-=friction;
+        if (vy<-friction) vy+=friction;
+        vx*=0.85;
+        vy*=0.85;
+        rectangle.setX((int) x);
+        rectangle.setY((int) y);
+        App.window.paint(App.window.getGraphics());
+        System.out.println(x+" "+y);
     }
-  
+
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
@@ -68,12 +68,12 @@ public class App
         drawingHandler = window.getDrawingHandler();
 
         drawingHandler.addDrawObject(rectangle);
-        int delay = 1000/30;
-          ActionListener taskPerformer = new ActionListener() {
-              public void actionPerformed(ActionEvent evt) {
-                  App.update();
-              }
-          };
-          new Timer(delay, taskPerformer).start();
+        int delay = 1000/60;
+        ActionListener taskPerformer = new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                App.update();
+            }
+        };
+        new Timer(delay, taskPerformer).start();
     }
 }
