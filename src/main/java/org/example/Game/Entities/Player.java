@@ -20,7 +20,13 @@ public class Player{
   private int health = 12;
   private int maxHealth = 12;
   private int mana = 25;
+  private int maxMana = 25;
+  private double manaSpeed = 45;
   private int manaCounter = 5;
+  private int cooldownTime = 30;
+  private double projectileSpeed = 2.5;
+  private int damage = 1;
+  private double damageModifier = 1;
   private static enum Stats {
     Damage,
     Resistence,
@@ -62,7 +68,7 @@ public class Player{
     initStats();
     setX(x);
     setY(y);
-    Hearts.setHeartCount((maxHealth+3)%4);
+    Hearts.setHeartCount((maxHealth+3)/4);
     Hearts.setHealth(health);
   }
 
@@ -87,11 +93,11 @@ public class Player{
 
   public void update(){
     if (cooldown>0) cooldown--;
-    if (manaCounter <= 0 & mana<25){
+    if (manaCounter <= 0 & mana<maxMana){
       mana++;
-      manaCounter=30;
+      manaCounter=(int)manaSpeed;
     }
-    else if (mana<25){
+    else if (mana<maxMana){
       manaCounter--;
     }
     Mana.mana = mana;
@@ -99,16 +105,44 @@ public class Player{
   }
   
 
-  public void shootProjectile(DrawingHandler handler, double vx, double vy){
+  public void shootProjectile(DrawingHandler handler, double xModifier, double yModifier){
     if (cooldown==0 && mana>5){
-      Projectile proj = new Projectile(getX(), getY(), vx, vy);
+      Projectile proj = new Projectile(getX(), getY(), projectileSpeed*xModifier, projectileSpeed*yModifier);
       App.world.shootProjectile(proj);
-      cooldown+=30;
+      cooldown=cooldownTime;
       mana-=5;
     }
     Mana.mana = mana;
   }
   public void draw(Graphics2D g){
     playerGraphics.draw(g);
+  }
+  public void modify(String type, double amount){
+    if (type.equals("damage")){
+      damageModifier*=amount;
+    }
+    if (type.equals("health")){
+      maxHealth+=2;
+      Hearts.setHeartCount((maxHealth+3)/4);
+    }
+    if (type.equals("heal")){
+      health+=2;
+      if (health > maxHealth) {health = maxHealth;} 
+      Hearts.setHealth(health);
+    }
+    if (type.equals("mana")){
+      maxMana+=amount;
+      manaSpeed/=1.125;
+      Mana.maxMana = maxMana;
+      if (manaSpeed<1) manaSpeed = 1;
+    }
+    if (type.equals("velocity")){
+      cooldownTime/=amount;
+      if (cooldownTime<1) cooldownTime = 1;
+      projectileSpeed*=amount;
+    }
+  }
+  public int getDamage(){
+    return (int)(damage*damageModifier);
   }
 }

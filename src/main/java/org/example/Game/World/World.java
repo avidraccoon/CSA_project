@@ -11,8 +11,8 @@ public class World extends AbstractDrawnGraphic{
   private WorldTile[][] tiles;
   private int width;
   private int height;
-  private int x = 5;
-  private int y = 5;
+  private int x = 2;
+  private int y = 2;
   private Player player;
   public World(int width, int height){
     player = new Player(25, 25);
@@ -36,7 +36,11 @@ public class World extends AbstractDrawnGraphic{
       xTileChange--;
       xChange+=400;
     }
-    x=(x+xTileChange)%width;
+    if (xTileChange!=0){
+      x=(x+xTileChange)%width;
+      if (x < 0) x=width-1;
+      tiles[y][x].setEnemyTimer(120);
+    }
     player.setX(xChange);
   }
 
@@ -50,7 +54,11 @@ public class World extends AbstractDrawnGraphic{
       yTileChange--;
       yChange+=400;
     }
-    y=(y+yTileChange)%height;
+    if (yTileChange!=0){
+      y=(y+yTileChange)%height;
+      if (y < 0) y=width-1;
+      tiles[y][x].setEnemyTimer(30);
+    }
     player.setY(yChange);
   }
 
@@ -79,5 +87,9 @@ public class World extends AbstractDrawnGraphic{
   }
   public void damagePlayer(int health){
     player.setHealth(player.getHealth()-health);
+  }
+
+  public Player getPlayer(){
+    return player;
   }
 }

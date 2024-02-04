@@ -42,7 +42,7 @@ public class App
     public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public static GraphicalRectangle rectangle = new GraphicalRectangle(25, 25, 25, 25);
-    public static World world = new World(25,25);
+    public static World world = new World(5,5);
     public static double x = 25;
     public static double y = 25;
     public static double vx = 0;
@@ -92,7 +92,7 @@ public class App
         double xFrac = xDist/totalDist;
         double yFrac = yDist/totalDist;
         if (fTyped){
-          world.playerShootProjectile(drawingHandler, 2.5*xFrac* (mouseX<x?-1:1), 2.5*yFrac*(mouseY<y?-1:1));
+          world.playerShootProjectile(drawingHandler, xFrac* (mouseX<x?-1:1), yFrac*(mouseY<y?-1:1));
           //fTyped = false;
         }
         world.update();

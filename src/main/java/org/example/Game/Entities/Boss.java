@@ -6,30 +6,35 @@ import org.example.App;
 
 import java.awt.*;
 
-public class Enemy{
+public class Boss{
   private double x;
   private double y;
   public boolean shouldDelete = false;
   private GraphicalImage image;
-  private String type = "enemy1";
-  private int damageCooldown = 30;
-  public int health = 4;
+  private String type = "KingSlime";
+  private int damageCooldown = 10;
+  public int health = 50;
 
   public void createImage(){
-    if (type.equals("enemy1")){
-       image = new GraphicalImage((int) x, (int) y, "src/main/textures/LightEnemy.png");
+    if (type.equals("KingSlime")){
+       image = new GraphicalImage((int) x, (int) y, "src/main/textures/KingSlime.png");
     }
-    if (type.equals("enemy2")){
-      health = 8;
-      damageCooldown = 15;
-      image = new GraphicalImage((int) x, (int) y, "src/main/textures/HeavyEnemy.png");
+    if (type.equals("KingSlime1")){
+      health = 30;
+      damageCooldown = 5;
+      image = new GraphicalImage((int) x, (int) y, "src/main/textures/KingSlime1.png");
+    }
+    if (type.equals("KingSlime2")){
+      health = 80;
+      damageCooldown = 20;
+      image = new GraphicalImage((int) x, (int) y, "src/main/textures/KingSlime2.png");
     }
   }
   public void draw(Graphics2D g){
     image.draw(g);
   }
 
-  public Enemy(String type, double x, double y){
+  public Boss(String type, double x, double y){
     this.type = type;
     this.x = x;
     this.y = y;

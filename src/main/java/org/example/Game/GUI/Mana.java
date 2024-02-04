@@ -7,6 +7,7 @@ import java.lang.Math;
 
 public class Mana extends AbstractDrawnGraphic{
   public static int mana = 25;
+  public static int maxMana = 25;
   public static GraphicalRectangle rectangle1 = new GraphicalRectangle(335, 46, 55, 10);
   public static GraphicalRectangle rectangle2 = new GraphicalRectangle(335, 46, 55, 10);
   public static Mana instance = new Mana();
@@ -21,8 +22,11 @@ public class Mana extends AbstractDrawnGraphic{
   }
   public void draw(Graphics2D g){
     int xModifier = 55*mana/25;
+    int mxModifier = 55*maxMana/25;
     rectangle2.setWidth(xModifier);
-    rectangle2.setX(335+(55-xModifier));
+    rectangle2.setX(400-5-xModifier);
+    rectangle1.setWidth(mxModifier);
+    rectangle1.setX(400-5-mxModifier);
     rectangle1.draw(g);
     rectangle2.draw(g);
   }
