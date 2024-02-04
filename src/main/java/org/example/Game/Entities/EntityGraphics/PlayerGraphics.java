@@ -20,7 +20,7 @@ public class PlayerGraphics extends AbstractDrawnGraphic{
   }
   
   public PlayerGraphics(int x, int y){
-    image = new GraphicalImage(x, y, "slimer.png");
+    image = new GraphicalImage(x, y, "src/main/textures/slimer.png");
     setX(x);
     setY(y);
   }

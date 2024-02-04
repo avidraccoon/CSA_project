@@ -9,15 +9,17 @@ public class TestKeyHandler extends KeyboardHandler{
     if ((""+e.getKeyChar()).equals("a")) App.a=true;
     if ((""+e.getKeyChar()).equals("s")) App.s=true;
     if ((""+e.getKeyChar()).equals("d")) App.d=true;
+    if ((""+e.getKeyChar()).equals("f")) App.fTyped = true;
   }
   public void keyReleased(KeyEvent e){
     if ((""+e.getKeyChar()).equals("w")) App.w=false;
     if ((""+e.getKeyChar()).equals("a")) App.a=false;
     if ((""+e.getKeyChar()).equals("s")) App.s=false;
     if ((""+e.getKeyChar()).equals("d")) App.d=false;
+    if ((""+e.getKeyChar()).equals("f")) App.fTyped = false;
   }
   public void keyTyped(KeyEvent e){
-    if ((""+e.getKeyChar()).equals("f")) App.fTyped = true;
+    //if ((""+e.getKeyChar()).equals("f")) App.fTyped = true;
     //super.keyTyped(e);
     /*
     if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE || e.getKeyChar() == KeyEvent.VK_DELETE){

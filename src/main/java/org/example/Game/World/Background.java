@@ -8,7 +8,7 @@ import java.awt.*;
 public class Background extends AbstractDrawnGraphic{
   private static int x = 0;
   private static int y = 21;
-  private static GraphicalImage image = new GraphicalImage(x, y, "backround.png");
+  private static GraphicalImage image = new GraphicalImage(x, y, "src/main/textures/backround.png");
   private static final Background INSTANCE = new Background();
 
   private Background(){}

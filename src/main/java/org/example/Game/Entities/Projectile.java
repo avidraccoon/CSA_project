@@ -11,6 +11,7 @@ public class Projectile{
   private double y;
   private double vx;
   private double vy;
+  public boolean shouldDelete = false;
   
   private GraphicalCircle circle;
 
@@ -71,5 +72,9 @@ public class Projectile{
 
   public void update(){
     applyVelocity();
+    if (x<0){shouldDelete = true;}
+    if (x>400){shouldDelete = true;}
+    if (y<0){shouldDelete = true;}
+    if (y>400){shouldDelete = true;}
   }
 }

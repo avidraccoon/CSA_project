@@ -14,20 +14,21 @@ import java.awt.event.KeyEvent;
 
 public class GraphicalWindow extends JFrame implements MouseListener, KeyListener {
 
-    private int width = 100;
-    private int height = 100;
+    private int width = 400;
+    private int height = 420;
     private String title = "Window";
-    private boolean resizable = true;
-
+    private boolean resizable = false;
+    Image backBuffer;
+    Graphics bBG;
     private DrawingHandler drawingHandler = new DrawingHandler();
     private KeyboardHandler keyboardHandler = new KeyboardHandler();
     private MouseHandler mouseHandler = new MouseHandler();
   
     private GraphicalWindow(){
+        setSize(width, height);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle(title);
         setResizable(resizable);
-        setSize(width, height);
         setVisible(true);
     }
 
@@ -59,8 +60,14 @@ public class GraphicalWindow extends JFrame implements MouseListener, KeyListene
     }
 
     public void paint(Graphics g){
-        super.paint(g);
-        drawingHandler.draw(g);
+        //super.paint(g);
+        if( backBuffer == null )
+        {
+            backBuffer = createImage( getWidth(), getHeight() );
+            bBG = backBuffer.getGraphics();
+        }
+        drawingHandler.draw(bBG);
+        g.drawImage( backBuffer, 0, 0, this );
     }
 
     public DrawingHandler getDrawingHandler(){

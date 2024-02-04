@@ -34,6 +34,8 @@ public class DrawingHandler {
     public boolean contains(DrawInterface d){
         return drawnObjects.contains(d);
     }
-
+    public void clear(){
+      drawnObjects.clear();
+    }
 
 }

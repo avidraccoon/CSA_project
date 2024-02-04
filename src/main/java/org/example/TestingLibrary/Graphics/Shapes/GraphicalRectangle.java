@@ -32,6 +32,8 @@ public class GraphicalRectangle extends AbstractShape {
         }
     }
 
+  
+
     public int getWidth() {
         return width;
     }

@@ -8,11 +8,17 @@ import org.example.TestingLibrary.Graphics.Shapes.GraphicalCircle;
 
 
 
-import org.example.Game.Entities.Player;
+import org.example.Game.World.World;
 import org.example.Game.Entities.Projectile;
 import org.example.Game.Entities.Enemy;
 import org.example.Game.World.Background;
 import org.example.Game.World.Trees;
+import org.example.Game.GUI.Hearts;
+import org.example.Game.GUI.Mana;
+import org.example.Game.GUI.Death;
+
+
+
 
 import javax.swing.Timer;
 
@@ -20,18 +26,23 @@ import javax.swing.Timer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.lang.Math;
-
+import java.lang.Thread;
 import java.util.ArrayList;
 
 public class App
 {
+
+    public static boolean restart = false;
+    public static int targetFrame = 0;
+    public static int calculatedFrame = 0;
+    public static int startTime = 0;
     public static String text = "Test";
     public static GraphicalWindow window;
     public static DrawingHandler drawingHandler;
     public static ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     public static GraphicalRectangle rectangle = new GraphicalRectangle(25, 25, 25, 25);
-    public static Player player = new Player(25,25);
+    public static World world = new World(25,25);
     public static double x = 25;
     public static double y = 25;
     public static double vx = 0;
@@ -41,10 +52,12 @@ public class App
     public static boolean s = false;
     public static boolean d = false;
     public static boolean fTyped = false;
-    public static double speed = .25;
-    public static double speedCap = 4.5;
-    public static double friction = 0.92;
+    public static double speed = .15;
+    public static double speedCap = 2.5;
+    public static double friction = 0.95;
     public static void update(){
+        x = world.getPlayerX();
+        y = world.getPlayerY();
         double vyChange = 0;
         double vxChange = 0;
         if (w) vyChange-=speed;
@@ -69,27 +82,45 @@ public class App
         //if (vy<-friction) vy+=friction;
         vx*=friction;
         vy*=friction;
-        player.setX(x);
-        player.setY(y);
+        world.setPlayerX(x);
+        world.setPlayerY(y);
         double mouseX = MouseInfo.getPointerInfo().getLocation().getX();
         double mouseY = MouseInfo.getPointerInfo().getLocation().getY();
-        double xDist = Math.abs(mouseX-player.getX());
-        double yDist = Math.abs(mouseY-player.getY());
+        double xDist = Math.abs(mouseX-x);
+        double yDist = Math.abs(mouseY-y);
         double totalDist = xDist + yDist;
         double xFrac = xDist/totalDist;
         double yFrac = yDist/totalDist;
         if (fTyped){
-          player.shootProjectile(drawingHandler, 5.0*xFrac* (mouseX<x?-1:1), 5.0*yFrac*(mouseY<y?-1:1));
-          fTyped = false;
+          world.playerShootProjectile(drawingHandler, 2.5*xFrac* (mouseX<x?-1:1), 2.5*yFrac*(mouseY<y?-1:1));
+          //fTyped = false;
         }
-        player.update();
-        App.window.paint(App.window.getGraphics());
+        world.update();
         //System.out.println(x+" "+y);
-        
+        if (restart){
+          System.out.println("dead");
+          Death.characterDead = true;
+          App.window.update(App.window.getGraphics());
+          try{
+            Thread.sleep(1000);
+          }catch (Exception e){
+            System.out.println(e);
+          }
+          Death.characterDead = false;
+          drawingHandler.clear();
+          world = new World(25,25);
+          drawingHandler.addDrawObject(Background.getInstance());
+          drawingHandler.addDrawObject(world);
+          drawingHandler.addDrawObject(Hearts.getInstance());
+          drawingHandler.addDrawObject(Mana.instance);
+          drawingHandler.addDrawObject(Death.instance);
+          restart = false;
+        }
     }
 
     public static void main( String[] args )
     {
+        App.startTime = (int) System.currentTimeMillis();
         System.out.println( "Hello World!" );
         window = GraphicalWindow.createWindow();
         window.setTitle("Test");
@@ -100,14 +131,40 @@ public class App
         window.setKeyHandler(new TestKeyHandler());
         drawingHandler = window.getDrawingHandler();
         drawingHandler.addDrawObject(Background.getInstance());
-        player.addToHandler(drawingHandler);
-        drawingHandler.addDrawObject(Trees.getInstance());
-        int delay = 1000/30;
+        drawingHandler.addDrawObject(world);
+        drawingHandler.addDrawObject(Hearts.getInstance());
+        drawingHandler.addDrawObject(Mana.instance);
+        drawingHandler.addDrawObject(Death.instance);
+        int delay = 1000/60;
         ActionListener taskPerformer = new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                App.update();
+                App.checkForUpdate(delay);
+                App.window.update(App.window.getGraphics());
             }
         };
         new Timer(delay, taskPerformer).start();
     }
+
+  public static int calculateTargetFrame(int delay){
+    int timeDiffrence = (int)(System.currentTimeMillis()-App.startTime);
+    return (int)(timeDiffrence/delay);
+  }
+
+  public static void batchUpdate(int Count){
+    for (int i = 0; i < Count; i++){
+      update();
+      //System.out.println(enemies);
+    }
+  }
+
+  public static void checkForUpdate(int delay){
+    App.targetFrame = App.calculateTargetFrame(delay);
+    //System.out.println(targetFrame);
+    //System.out.println(calculatedFrame);
+    if (App.targetFrame != App.calculatedFrame){
+      //System.out.println(Main.targetFrame+" "+ Main.calculatedFrame);
+        App.batchUpdate(App.targetFrame - App.calculatedFrame);
+      App.calculatedFrame = App.targetFrame;
+    }
+  }
 }
